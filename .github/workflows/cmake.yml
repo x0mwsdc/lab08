@@ -1,4 +1,4 @@
-name: CMake Build, Test, Package and Docs
+name: CMake Build, Test, Package, Docs and Lint
 
 on:
   push:
@@ -15,10 +15,16 @@ jobs:
       with:
         submodules: true
 
-    - name: Install Doxygen
+    - name: Install Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y doxygen
+        sudo apt-get install -y doxygen clang-format cppcheck
+
+    - name: Lint Code with Clang-Format
+      run: clang-format --dry-run --Werror include/*.hpp sources/*.cpp examples/*.cpp tests/*.cpp
+
+    - name: Static Analysis with Cppcheck
+      run: cppcheck --enable=all --error-exitcode=1 --suppress=missingIncludeSystem --suppress=unusedFunction include/ sources/
 
     - name: Configure CMake
       run: cmake -B build -S . -DBUILD_TESTS=ON
@@ -38,7 +44,7 @@ jobs:
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: project-packages-and-docs
+        name: project-artifacts
         path: |
           build/*.tar.gz
           build/*.deb
