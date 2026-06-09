@@ -5,8 +5,8 @@
  * @brief Заголовочный файл библиотеки вывода текста.
  */
 
-#include <string>
 #include <iostream>
+#include <string>
 
 /**
  * @brief Выводит переданный текст в указанный поток вывода.
