@@ -4,6 +4,8 @@ project(print_project)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+option(BUILD_TESTS "Build tests" OFF)
+
 include_directories(include)
 
 add_library(print sources/print.cpp)
@@ -13,3 +15,11 @@ target_link_libraries(example1 print)
 
 add_executable(example2 examples/example2.cpp)
 target_link_libraries(example2 print)
+
+if(BUILD_TESTS)
+  enable_testing()
+  add_subdirectory(third-party/gtest)
+  add_executable(check tests/test1.cpp)
+  target_link_libraries(check print gtest_main)
+  add_test(NAME check COMMAND check)
+endif()
