@@ -1,0 +1,7 @@
+PROJECT_NAME           = "Print Project"
+PROJECT_NUMBER         = "1.0.0"
+OUTPUT_DIRECTORY       = docs
+INPUT                  = include sources README.md
+RECURSIVE              = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
